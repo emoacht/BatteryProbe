@@ -73,7 +73,7 @@ namespace BatteryInfo
 
             Trace.WriteLine("BatteryLifePercent: \{batteryLifePercentNew}"); // To be changed in later version
 
-            // Recond log if BatteryLifePercent is changed.
+            // Record log if BatteryLifePercent is changed.
             if (batteryLifePercentOld == batteryLifePercentNew)
                 return;
 

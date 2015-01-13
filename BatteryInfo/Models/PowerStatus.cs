@@ -52,13 +52,11 @@ namespace BatteryInfo.Models
             get
             {
                 UpdateSystemPowerStatus();
-
-                var batteryFlag = systemPowerStatus.BatteryFlag;
-
-                if (batteryFlag.HasFlag(BatteryFlag.NoSystemBattery))
+                
+                if (systemPowerStatus.BatteryFlag.HasFlag(BatteryFlag.NoSystemBattery))
                     return BatteryChargeStatus.NoSystemBattery;
 
-                if (batteryFlag.HasFlag(BatteryFlag.Unknown))
+                if (systemPowerStatus.BatteryFlag.HasFlag(BatteryFlag.Unknown))
                     return BatteryChargeStatus.Unknown;
 
                 if (systemPowerStatus.BatteryLifePercent > 100)
@@ -74,7 +72,7 @@ namespace BatteryInfo.Models
                 else
                     buff = BatteryChargeStatus.Critical;
 
-                if (batteryFlag.HasFlag(BatteryFlag.Charging))
+                if (systemPowerStatus.BatteryFlag.HasFlag(BatteryFlag.Charging))
                     buff |= BatteryChargeStatus.Charging;
 
                 return buff;

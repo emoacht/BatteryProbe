@@ -7,15 +7,17 @@ namespace BatteryInfo
     {
         public BatteryChargeStatus BatteryChargeStatus => PowerStatus.BatteryChargeStatus; // Flag
 
-        public string BatteryFullLifetime => PowerStatus.BatteryFullLifetime?.ToString() ?? "Unknown";
+        public string BatteryFullLifetime => PowerStatus.BatteryFullLifetime?.ToString() ?? UnknownString;
 
-        public string BatteryLifePercent => PowerStatus.BatteryLifePercent?.ToString() ?? "Unknown";
+        public string BatteryLifePercent => PowerStatus.BatteryLifePercent?.ToString("f2") ?? UnknownString;
 
-        public string BatteryLifeRemaining => PowerStatus.BatteryLifeRemaining?.ToString() ?? "Unknown";
+        public string BatteryLifeRemaining => PowerStatus.BatteryLifeRemaining?.ToString() ?? UnknownString;
 
         public PowerLineStatus PowerLineStatus => PowerStatus.PowerLineStatus;
 
         public bool BatteryIsCharging => BatteryChargeStatus.HasFlag(BatteryChargeStatus.Charging);
+
+        internal string UnknownString { get; set; } = "Unknown";
 
         internal void Update()
         {

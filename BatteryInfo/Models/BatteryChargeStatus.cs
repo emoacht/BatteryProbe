@@ -19,7 +19,7 @@ namespace BatteryInfo.Models
         High = 1,
 
         /// <summary>
-        /// Indicates a middle level of battery charge (bewteen low and high).
+        /// Indicates a middle level of battery charge (between low and high).
         /// </summary>
         /// <remarks>In BatteryFlag, this value is 0.</remarks>
         Middle = 2,
