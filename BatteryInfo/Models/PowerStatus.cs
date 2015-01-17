@@ -62,20 +62,20 @@ namespace BatteryInfo.Models
                 if (systemPowerStatus.BatteryLifePercent > 100)
                     return BatteryChargeStatus.Unknown;
 
-                BatteryChargeStatus buff;
+                BatteryChargeStatus status;
                 if (systemPowerStatus.BatteryLifePercent > 66)
-                    buff = BatteryChargeStatus.High;
+                    status = BatteryChargeStatus.High;
                 else if (systemPowerStatus.BatteryLifePercent >= 33)
-                    buff = BatteryChargeStatus.Middle;
+                    status = BatteryChargeStatus.Middle;
                 else if (systemPowerStatus.BatteryLifePercent >= 5)
-                    buff = BatteryChargeStatus.Low;
+                    status = BatteryChargeStatus.Low;
                 else
-                    buff = BatteryChargeStatus.Critical;
+                    status = BatteryChargeStatus.Critical;
 
                 if (systemPowerStatus.BatteryFlag.HasFlag(BatteryFlag.Charging))
-                    buff |= BatteryChargeStatus.Charging;
+                    status |= BatteryChargeStatus.Charging;
 
-                return buff;
+                return status;
             }
         }
 

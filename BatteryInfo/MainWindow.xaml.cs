@@ -71,7 +71,7 @@ namespace BatteryInfo
 
             var batteryLifePercentNew = Status.BatteryLifePercent;
 
-            Trace.WriteLine("BatteryLifePercent: \{batteryLifePercentNew}"); // To be changed in later version
+            Trace.WriteLine($"BatteryLifePercent: {batteryLifePercentNew}");
 
             // Record log if BatteryLifePercent is changed.
             if (batteryLifePercentOld == batteryLifePercentNew)
@@ -105,7 +105,7 @@ namespace BatteryInfo
             }
             catch (Exception ex)
             {
-                Trace.WriteLine("Failed to record log.\r\n\{ex}"); // To be changed in later version
+                Trace.WriteLine($"Failed to record log.\r\n{ex}");
             }
         }
 
