@@ -9,7 +9,7 @@ A Windows desktop app to check battery info
 
 ##Development
 
-This app is developed in C# with Visual Studio 2015 Preview. Some parts utilize C# 6.0 features.
+This app is developed in C# with Visual Studio 2015 CTP. Some parts utilize C# 6.0 features.
 
 ##Other
 
