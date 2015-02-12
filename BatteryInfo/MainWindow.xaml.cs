@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -15,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Microsoft.Win32;
 
 namespace BatteryInfo
 {
@@ -26,7 +26,7 @@ namespace BatteryInfo
 		}
 
 		public BatteryStatus Status { get; } = new BatteryStatus();
-		private DispatcherTimer updateTimer;
+		private DispatcherTimer _updateTimer;
 
 		protected override async void OnSourceInitialized(EventArgs e)
 		{
@@ -34,9 +34,9 @@ namespace BatteryInfo
 
 			await UpdateAsync();
 
-			updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(6) };
-			updateTimer.Tick += OnUpdateTimerTick;
-			updateTimer.Start();
+			_updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(6) };
+			_updateTimer.Tick += OnUpdateTimerTick;
+			_updateTimer.Start();
 
 			SystemEvents.PowerModeChanged += OnPowerModeChanged;
 		}
@@ -61,9 +61,9 @@ namespace BatteryInfo
 
 		#region Update
 
-		private string batteryLifePercentOld;
-		private const string recordFileName = "record.csv";
-		private static readonly DateTime dateTimeZero = new DateTime(DateTime.Today.Year, 1, 1);
+		private string _batteryLifePercentOld;
+		private const string _recordFileName = "record.csv";
+		private static readonly DateTime _dateTimeZero = new DateTime(DateTime.Today.Year, 1, 1);
 
 		private async Task UpdateAsync()
 		{
@@ -74,19 +74,19 @@ namespace BatteryInfo
 			Trace.WriteLine($"BatteryLifePercent: {batteryLifePercentNew}");
 
 			// Record log if BatteryLifePercent is changed.
-			if (batteryLifePercentOld == batteryLifePercentNew)
+			if (_batteryLifePercentOld == batteryLifePercentNew)
 				return;
 
-			batteryLifePercentOld = batteryLifePercentNew;
+			_batteryLifePercentOld = batteryLifePercentNew;
 
 			var dateTimeNow = DateTime.Now;
 			var content = String.Format(@"""{0:yyyy MM/dd HH:mm:ss}"",{1},{2},{3}",
 				dateTimeNow,
-				(long)((dateTimeNow - dateTimeZero).TotalSeconds),
+				(long)((dateTimeNow - _dateTimeZero).TotalSeconds),
 				Status.BatteryLifePercent,
 				Status.BatteryChargeStatus);
 
-			var recordFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, recordFileName);
+			var recordFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _recordFileName);
 
 			try
 			{
@@ -98,7 +98,7 @@ namespace BatteryInfo
 				recordFilePath = Path.Combine(
 					Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
 					Assembly.GetExecutingAssembly().GetName().Name,
-					recordFileName);
+					_recordFileName);
 
 				using (var sw = new StreamWriter(recordFilePath, true))	// Append
 					await sw.WriteAsync(content + Environment.NewLine);
