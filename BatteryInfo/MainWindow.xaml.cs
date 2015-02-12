@@ -18,97 +18,97 @@ using System.Windows.Threading;
 
 namespace BatteryInfo
 {
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+	public partial class MainWindow : Window
+	{
+		public MainWindow()
+		{
+			InitializeComponent();
+		}
 
-        public BatteryStatus Status { get; } = new BatteryStatus();
-        private DispatcherTimer updateTimer;
+		public BatteryStatus Status { get; } = new BatteryStatus();
+		private DispatcherTimer updateTimer;
 
-        protected override async void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
+		protected override async void OnSourceInitialized(EventArgs e)
+		{
+			base.OnSourceInitialized(e);
 
-            await UpdateAsync();
+			await UpdateAsync();
 
-            updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(6) };
-            updateTimer.Tick += OnUpdateTimerTick;
-            updateTimer.Start();
+			updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(6) };
+			updateTimer.Tick += OnUpdateTimerTick;
+			updateTimer.Start();
 
-            SystemEvents.PowerModeChanged += OnPowerModeChanged;
-        }
+			SystemEvents.PowerModeChanged += OnPowerModeChanged;
+		}
 
-        private async void OnUpdateTimerTick(object sender, EventArgs e)
-        {
-            await UpdateAsync();
-        }
+		private async void OnUpdateTimerTick(object sender, EventArgs e)
+		{
+			await UpdateAsync();
+		}
 
-        private async void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
-        {
-            await UpdateAsync();
-        }
+		private async void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
+		{
+			await UpdateAsync();
+		}
 
-        protected override void OnClosed(EventArgs e)
-        {
-            SystemEvents.PowerModeChanged -= OnPowerModeChanged;
+		protected override void OnClosed(EventArgs e)
+		{
+			SystemEvents.PowerModeChanged -= OnPowerModeChanged;
 
-            base.OnClosed(e);
-        }
+			base.OnClosed(e);
+		}
 
 
-        #region Update
+		#region Update
 
-        private string batteryLifePercentOld;
-        private const string recordFileName = "record.csv";
-        private static readonly DateTime dateTimeZero = new DateTime(DateTime.Today.Year, 1, 1);
+		private string batteryLifePercentOld;
+		private const string recordFileName = "record.csv";
+		private static readonly DateTime dateTimeZero = new DateTime(DateTime.Today.Year, 1, 1);
 
-        private async Task UpdateAsync()
-        {
-            Status.Update();
+		private async Task UpdateAsync()
+		{
+			Status.Update();
 
-            var batteryLifePercentNew = Status.BatteryLifePercent;
+			var batteryLifePercentNew = Status.BatteryLifePercent;
 
-            Trace.WriteLine($"BatteryLifePercent: {batteryLifePercentNew}");
+			Trace.WriteLine($"BatteryLifePercent: {batteryLifePercentNew}");
 
-            // Record log if BatteryLifePercent is changed.
-            if (batteryLifePercentOld == batteryLifePercentNew)
-                return;
+			// Record log if BatteryLifePercent is changed.
+			if (batteryLifePercentOld == batteryLifePercentNew)
+				return;
 
-            batteryLifePercentOld = batteryLifePercentNew;
+			batteryLifePercentOld = batteryLifePercentNew;
 
-            var dateTimeNow = DateTime.Now;
-            var content = String.Format(@"""{0:yyyy MM/dd HH:mm:ss}"",{1},{2},{3}",
-                dateTimeNow,
-                (long)((dateTimeNow - dateTimeZero).TotalSeconds),
-                Status.BatteryLifePercent,
-                Status.BatteryChargeStatus);
+			var dateTimeNow = DateTime.Now;
+			var content = String.Format(@"""{0:yyyy MM/dd HH:mm:ss}"",{1},{2},{3}",
+				dateTimeNow,
+				(long)((dateTimeNow - dateTimeZero).TotalSeconds),
+				Status.BatteryLifePercent,
+				Status.BatteryChargeStatus);
 
-            var recordFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, recordFileName);
+			var recordFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, recordFileName);
 
-            try
-            {
-                using (var sw = new StreamWriter(recordFilePath, true)) // Append
-                    await sw.WriteAsync(content + Environment.NewLine);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                recordFilePath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                    Assembly.GetExecutingAssembly().GetName().Name,
-                    recordFileName);
+			try
+			{
+				using (var sw = new StreamWriter(recordFilePath, true))	// Append
+					await sw.WriteAsync(content + Environment.NewLine);
+			}
+			catch (UnauthorizedAccessException)
+			{
+				recordFilePath = Path.Combine(
+					Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+					Assembly.GetExecutingAssembly().GetName().Name,
+					recordFileName);
 
-                using (var sw = new StreamWriter(recordFilePath, true)) // Append
-                    await sw.WriteAsync(content + Environment.NewLine);
-            }
-            catch (Exception ex)
-            {
-                Trace.WriteLine($"Failed to record log.\r\n{ex}");
-            }
-        }
+				using (var sw = new StreamWriter(recordFilePath, true))	// Append
+					await sw.WriteAsync(content + Environment.NewLine);
+			}
+			catch (Exception ex)
+			{
+				Trace.WriteLine($"Failed to record log.\r\n{ex}");
+			}
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

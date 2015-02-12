@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace BatteryInfo
 {
-    public partial class App : Application
-    {
-    }
+	public partial class App : Application
+	{
+	}
 }
