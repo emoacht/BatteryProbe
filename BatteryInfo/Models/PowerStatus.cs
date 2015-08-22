@@ -42,7 +42,6 @@ namespace BatteryInfo.Models
 
 		#endregion
 
-
 		#region Property
 
 		/// <summary>
@@ -52,31 +51,31 @@ namespace BatteryInfo.Models
 		{
 			get
 			{
-				UpdateSystemPowerStatus();
+				var powerStatus = SystemPowerStatus;
 
-				if (_systemPowerStatus.BatteryFlag.HasFlag(BatteryFlag.NoSystemBattery))
+				if (powerStatus.BatteryFlag.HasFlag(BatteryFlag.NoSystemBattery))
 					return BatteryChargeStatus.NoSystemBattery;
 
-				if (_systemPowerStatus.BatteryFlag.HasFlag(BatteryFlag.Unknown))
+				if (powerStatus.BatteryFlag.HasFlag(BatteryFlag.Unknown))
 					return BatteryChargeStatus.Unknown;
 
-				if (_systemPowerStatus.BatteryLifePercent > 100)
+				if (powerStatus.BatteryLifePercent > 100)
 					return BatteryChargeStatus.Unknown;
 
-				BatteryChargeStatus status;
-				if (_systemPowerStatus.BatteryLifePercent > 66)
-					status = BatteryChargeStatus.High;
-				else if (_systemPowerStatus.BatteryLifePercent >= 33)
-					status = BatteryChargeStatus.Middle;
-				else if (_systemPowerStatus.BatteryLifePercent >= 5)
-					status = BatteryChargeStatus.Low;
+				BatteryChargeStatus chargeStatus;
+				if (powerStatus.BatteryLifePercent > 66)
+					chargeStatus = BatteryChargeStatus.High;
+				else if (powerStatus.BatteryLifePercent >= 33)
+					chargeStatus = BatteryChargeStatus.Middle;
+				else if (powerStatus.BatteryLifePercent >= 5)
+					chargeStatus = BatteryChargeStatus.Low;
 				else
-					status = BatteryChargeStatus.Critical;
+					chargeStatus = BatteryChargeStatus.Critical;
 
-				if (_systemPowerStatus.BatteryFlag.HasFlag(BatteryFlag.Charging))
-					status |= BatteryChargeStatus.Charging;
+				if (powerStatus.BatteryFlag.HasFlag(BatteryFlag.Charging))
+					chargeStatus |= BatteryChargeStatus.Charging;
 
-				return status;
+				return chargeStatus;
 			}
 		}
 
@@ -87,11 +86,9 @@ namespace BatteryInfo.Models
 		{
 			get
 			{
-				UpdateSystemPowerStatus();
+				var value = SystemPowerStatus.BatteryFullLifeTime;
 
-				var buff = _systemPowerStatus.BatteryFullLifeTime;
-
-				return (buff >= 0) ? buff : (int?)null;	// Original value will be -1 if unknown.
+				return (value >= 0) ? value : (int?)null; // Original value will be -1 if unknown.
 			}
 		}
 
@@ -102,11 +99,9 @@ namespace BatteryInfo.Models
 		{
 			get
 			{
-				UpdateSystemPowerStatus();
+				var value = (int)SystemPowerStatus.BatteryLifePercent;
 
-				var buff = (int)_systemPowerStatus.BatteryLifePercent;
-
-				return (buff <= 100) ? buff / 100f : (float?)null; // Original value will be 255 if unknown.
+				return (value <= 100) ? value / 100f : (float?)null; // Original value will be 255 if unknown.
 			}
 		}
 
@@ -117,11 +112,9 @@ namespace BatteryInfo.Models
 		{
 			get
 			{
-				UpdateSystemPowerStatus();
+				var value = SystemPowerStatus.BatteryLifeTime;
 
-				var buff = _systemPowerStatus.BatteryLifeTime;
-
-				return (buff >= 0) ? buff : (int?)null;	// Original value will be -1 if unknown.
+				return (value >= 0) ? value : (int?)null; // Original value will be -1 if unknown.
 			}
 		}
 
@@ -132,20 +125,28 @@ namespace BatteryInfo.Models
 		{
 			get
 			{
-				UpdateSystemPowerStatus();
-
-				return (PowerLineStatus)_systemPowerStatus.ACLineStatus;
+				return (PowerLineStatus)SystemPowerStatus.ACLineStatus;
 			}
 		}
 
-		#endregion
+		private static DateTime _lastTime = DateTime.MinValue;
 
+		private static SYSTEM_POWER_STATUS SystemPowerStatus
+		{
+			get
+			{
+				var currentTime = DateTime.Now;
+				if (_lastTime.AddMilliseconds(100) < currentTime)
+				{
+					_lastTime = currentTime;
 
+					GetSystemPowerStatus(ref _systemPowerStatus);
+				}
+				return _systemPowerStatus;
+			}
+		}
 		private static SYSTEM_POWER_STATUS _systemPowerStatus;
 
-		private static void UpdateSystemPowerStatus()
-		{
-			GetSystemPowerStatus(ref _systemPowerStatus);
-		}
+		#endregion
 	}
 }

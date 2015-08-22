@@ -63,7 +63,7 @@
     </Compile>
     <Compile Include="BatteryStatus.cs" />
     <Compile Include="BooleanToBrushConverter.cs" />
-    <Compile Include="Common\NotificationObject.cs" />
+    <Compile Include="Common\BindableBase.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -63,7 +63,7 @@ namespace BatteryInfo
 
 		private string _batteryLifePercentOld;
 		private const string _recordFileName = "record.csv";
-		private static readonly DateTime _dateTimeZero = new DateTime(DateTime.Today.Year, 1, 1);
+		private static readonly DateTime _zeroTime = new DateTime(DateTime.Today.Year, 1, 1);
 
 		private async Task UpdateAsync()
 		{
@@ -79,10 +79,10 @@ namespace BatteryInfo
 
 			_batteryLifePercentOld = batteryLifePercentNew;
 
-			var dateTimeNow = DateTime.Now;
-			var content = String.Format(@"""{0:yyyy MM/dd HH:mm:ss}"",{1},{2},{3}",
-				dateTimeNow,
-				(long)((dateTimeNow - _dateTimeZero).TotalSeconds),
+			var currentTime = DateTime.Now;
+			var content = string.Format(@"""{0:yyyy MM/dd HH:mm:ss}"",{1},{2},{3}",
+				currentTime,
+				(long)((currentTime - _zeroTime).TotalSeconds),
 				Status.BatteryLifePercent,
 				Status.BatteryChargeStatus);
 
@@ -90,7 +90,7 @@ namespace BatteryInfo
 
 			try
 			{
-				using (var sw = new StreamWriter(recordFilePath, true))	// Append
+				using (var sw = new StreamWriter(recordFilePath, true)) // Append
 					await sw.WriteAsync(content + Environment.NewLine);
 			}
 			catch (UnauthorizedAccessException)
@@ -100,7 +100,7 @@ namespace BatteryInfo
 					Assembly.GetExecutingAssembly().GetName().Name,
 					_recordFileName);
 
-				using (var sw = new StreamWriter(recordFilePath, true))	// Append
+				using (var sw = new StreamWriter(recordFilePath, true)) // Append
 					await sw.WriteAsync(content + Environment.NewLine);
 			}
 			catch (Exception ex)

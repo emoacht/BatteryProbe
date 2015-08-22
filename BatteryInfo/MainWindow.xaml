@@ -1,59 +1,56 @@
 ﻿<Window x:Class="BatteryInfo.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BatteryInfo"
-        mc:Ignorable="d"
-        x:Name="WindowRoot"
-        Title="BatteryInfo"
-        Width="320" Height="140" ResizeMode="NoResize">
-    <Window.Resources>
-        <local:BooleanToBrushConverter x:Key="BooleanToBrushConverterForeground" TailBrush="Black" HeadBrush="White"/>
-        <local:BooleanToBrushConverter x:Key="BooleanToBrushConverterBackground" TailBrush="White" HeadBrush="Red"/>
-    </Window.Resources>
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:local="clr-namespace:BatteryInfo"
+		x:Name="WindowRoot"
+		Title="Battery Info"
+		Width="320" Height="140" SizeToContent="Height" ResizeMode="NoResize">
+	<Window.Resources>
+		<local:BooleanToBrushConverter x:Key="BooleanToBrushConverterForeground" TailBrush="Black" HeadBrush="White"/>
+		<local:BooleanToBrushConverter x:Key="BooleanToBrushConverterBackground" TailBrush="White" HeadBrush="Red"/>
+	</Window.Resources>
 
-    <Grid Margin="4">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+	<Grid Margin="4">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
 
-        <!-- PowerLineStatus -->
-        <Label Grid.Column="0" Grid.Row="0"
-               HorizontalAlignment="Left" VerticalAlignment="Center"
-               Content="PowerLineStatus"/>
-        <TextBox Grid.Column="1" Grid.Row="0"
-                 Width="160" Height="25" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"
-                 VerticalContentAlignment="Center"
-                 FontSize="16" IsReadOnly="True" 
-                 Text="{Binding ElementName=WindowRoot, Path=Status.PowerLineStatus, Mode=OneWay}"/>
+		<!-- PowerLineStatus -->
+		<Label Grid.Column="0" Grid.Row="0"
+			   HorizontalAlignment="Left" VerticalAlignment="Center"
+			   Content="PowerLineStatus"/>
+		<TextBox Grid.Column="1" Grid.Row="0"
+				 Height="25" Margin="4" VerticalAlignment="Center"
+				 VerticalContentAlignment="Center"
+				 FontSize="16" IsReadOnly="True"
+				 Text="{Binding ElementName=WindowRoot, Path=Status.PowerLineStatus, Mode=OneWay}"/>
 
-        <!-- BatteryChargeStatus -->
-        <Label Grid.Column="0" Grid.Row="1"
-               HorizontalAlignment="Left" VerticalAlignment="Center"
-               Content="BatteryChargeStatus"/>
-        <TextBox Grid.Column="1" Grid.Row="1"
-                 Width="160" Height="25" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"
-                 VerticalContentAlignment="Center"
-                 Foreground="{Binding ElementName=WindowRoot, Path=Status.BatteryIsCharging, Converter={StaticResource BooleanToBrushConverterForeground}}"
-                 Background="{Binding ElementName=WindowRoot, Path=Status.BatteryIsCharging, Converter={StaticResource BooleanToBrushConverterBackground}}"
-                 FontSize="16" IsReadOnly="True"
-                 Text="{Binding ElementName=WindowRoot, Path=Status.BatteryChargeStatus, Mode=OneWay}"/>
+		<!-- BatteryChargeStatus -->
+		<Label Grid.Column="0" Grid.Row="1"
+			   HorizontalAlignment="Left" VerticalAlignment="Center"
+			   Content="BatteryChargeStatus"/>
+		<TextBox Grid.Column="1" Grid.Row="1"
+				 Height="25" Margin="4" VerticalAlignment="Center"
+				 VerticalContentAlignment="Center"
+				 Foreground="{Binding ElementName=WindowRoot, Path=Status.BatteryIsCharging, Converter={StaticResource BooleanToBrushConverterForeground}}"
+				 Background="{Binding ElementName=WindowRoot, Path=Status.BatteryIsCharging, Converter={StaticResource BooleanToBrushConverterBackground}}"
+				 FontSize="16" IsReadOnly="True"
+				 Text="{Binding ElementName=WindowRoot, Path=Status.BatteryChargeStatus, Mode=OneWay}"/>
 
-        <!-- BatteryLifePercent -->
-        <Label Grid.Column="0" Grid.Row="2"
-               HorizontalAlignment="Left" VerticalAlignment="Center"
-               Content="BatteryLifePercent"/>
-        <TextBox Grid.Column="1" Grid.Row="2"
-                 Width="160" Height="25" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"
-                 VerticalContentAlignment="Center"
-                 FontSize="16" IsReadOnly="True"
-                 Text="{Binding ElementName=WindowRoot, Path=Status.BatteryLifePercent, Mode=OneWay}"/>
-    </Grid>
+		<!-- BatteryLifePercent -->
+		<Label Grid.Column="0" Grid.Row="2"
+			   HorizontalAlignment="Left" VerticalAlignment="Center"
+			   Content="BatteryLifePercent"/>
+		<TextBox Grid.Column="1" Grid.Row="2"
+				 Height="25" Margin="4" VerticalAlignment="Center"
+				 VerticalContentAlignment="Center"
+				 FontSize="16" IsReadOnly="True"
+				 Text="{Binding ElementName=WindowRoot, Path=Status.BatteryLifePercent, Mode=OneWay}"/>
+	</Grid>
 </Window>

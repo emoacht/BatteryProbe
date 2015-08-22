@@ -3,7 +3,7 @@ using BatteryInfo.Models;
 
 namespace BatteryInfo
 {
-	public class BatteryStatus : NotificationObject
+	public class BatteryStatus : BindableBase
 	{
 		public BatteryChargeStatus BatteryChargeStatus => PowerStatus.BatteryChargeStatus; // Flag
 
