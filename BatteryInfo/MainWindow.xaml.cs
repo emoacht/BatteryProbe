@@ -58,11 +58,20 @@ namespace BatteryInfo
 			base.OnClosed(e);
 		}
 
-
 		#region Update
 
-		private string _batteryLifePercentOld;
-		private const string _recordFileName = "record.csv";
+		private const string _fileName = "record.csv";
+
+		private readonly string _filePathWorkingFolder = Path.Combine(
+			AppDomain.CurrentDomain.BaseDirectory,
+			_fileName);
+
+		private readonly string _filePathAppDataFolder = Path.Combine(
+			Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+			Assembly.GetExecutingAssembly().GetName().Name,
+			_fileName);
+
+		private float? _batteryLifePercentOld;
 		private static readonly DateTime _zeroTime = new DateTime(DateTime.Today.Year, 1, 1);
 
 		private async Task UpdateAsync()
@@ -83,29 +92,22 @@ namespace BatteryInfo
 			var content = string.Format(@"""{0:yyyy MM/dd HH:mm:ss}"",{1},{2},{3}",
 				currentTime,
 				(long)((currentTime - _zeroTime).TotalSeconds),
-				Status.BatteryLifePercent,
+				Status.BatteryLifePercent?.ToString("f2") ?? "Unknown",
 				Status.BatteryChargeStatus);
-
-			var recordFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _recordFileName);
 
 			try
 			{
-				using (var sw = new StreamWriter(recordFilePath, true)) // Append
+				using (var sw = new StreamWriter(_filePathWorkingFolder, true)) // Append
 					await sw.WriteAsync(content + Environment.NewLine);
 			}
 			catch (UnauthorizedAccessException)
 			{
-				recordFilePath = Path.Combine(
-					Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-					Assembly.GetExecutingAssembly().GetName().Name,
-					_recordFileName);
-
-				using (var sw = new StreamWriter(recordFilePath, true)) // Append
+				using (var sw = new StreamWriter(_filePathAppDataFolder, true)) // Append
 					await sw.WriteAsync(content + Environment.NewLine);
 			}
 			catch (Exception ex)
 			{
-				Trace.WriteLine($"Failed to record log.\r\n{ex}");
+				Trace.WriteLine("Failed to record log." + Environment.NewLine + ex);
 			}
 		}
 

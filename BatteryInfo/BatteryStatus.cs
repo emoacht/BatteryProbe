@@ -6,18 +6,11 @@ namespace BatteryInfo
 	public class BatteryStatus : BindableBase
 	{
 		public BatteryChargeStatus BatteryChargeStatus => PowerStatus.BatteryChargeStatus; // Flag
-
-		public string BatteryFullLifetime => PowerStatus.BatteryFullLifetime?.ToString() ?? UnknownString;
-
-		public string BatteryLifePercent => PowerStatus.BatteryLifePercent?.ToString("f2") ?? UnknownString;
-
-		public string BatteryLifeRemaining => PowerStatus.BatteryLifeRemaining?.ToString() ?? UnknownString;
-
-		public PowerLineStatus PowerLineStatus => PowerStatus.PowerLineStatus;
-
+		public int? BatteryFullLifetime => PowerStatus.BatteryFullLifetime;
+		public float? BatteryLifePercent => PowerStatus.BatteryLifePercent;
+		public int? BatteryLifeRemaining => PowerStatus.BatteryLifeRemaining;
 		public bool BatteryIsCharging => BatteryChargeStatus.HasFlag(BatteryChargeStatus.Charging);
-
-		internal string UnknownString { get; set; } = "Unknown";
+		public PowerLineStatus PowerLineStatus => PowerStatus.PowerLineStatus;
 
 		internal void Update()
 		{
@@ -25,8 +18,8 @@ namespace BatteryInfo
 			RaisePropertyChanged(nameof(BatteryFullLifetime));
 			RaisePropertyChanged(nameof(BatteryLifePercent));
 			RaisePropertyChanged(nameof(BatteryLifeRemaining));
-			RaisePropertyChanged(nameof(PowerLineStatus));
 			RaisePropertyChanged(nameof(BatteryIsCharging));
+			RaisePropertyChanged(nameof(PowerLineStatus));
 		}
 	}
 }

@@ -14,10 +14,10 @@ namespace BatteryInfo
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (!(value is bool))
+			if (!(value is bool source))
 				return DependencyProperty.UnsetValue;
 
-			return (bool)value ? HeadBrush : TailBrush;
+			return source ? HeadBrush : TailBrush;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

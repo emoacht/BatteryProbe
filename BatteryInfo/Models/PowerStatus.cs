@@ -99,7 +99,7 @@ namespace BatteryInfo.Models
 		{
 			get
 			{
-				var value = (int)SystemPowerStatus.BatteryLifePercent;
+				var value = SystemPowerStatus.BatteryLifePercent;
 
 				return (value <= 100) ? value / 100f : (float?)null; // Original value will be 255 if unknown.
 			}
@@ -121,13 +121,7 @@ namespace BatteryInfo.Models
 		/// <summary>
 		/// AC power status
 		/// </summary>
-		public static PowerLineStatus PowerLineStatus
-		{
-			get
-			{
-				return (PowerLineStatus)SystemPowerStatus.ACLineStatus;
-			}
-		}
+		public static PowerLineStatus PowerLineStatus => (PowerLineStatus)SystemPowerStatus.ACLineStatus;
 
 		private static DateTime _lastTime = DateTime.MinValue;
 
