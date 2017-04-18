@@ -1,12 +1,11 @@
-﻿Battery Info
-============
+﻿# Battery Info
 
 A Windows desktop app to check battery info
 
-##Requirements
+## Requirements
 
  * .NET Framework 4.5.2
 
-##License
+## License
 
  - MIT License
