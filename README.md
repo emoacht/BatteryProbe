@@ -1,10 +1,10 @@
-﻿# Battery Info
+﻿# Battery Probe
 
-A Windows desktop app to check battery info
+A Windows desktop app to probe battery information
 
 ## Requirements
 
- * .NET Framework 4.5.2
+ * .NET Framework 4.8
 
 ## License
 
