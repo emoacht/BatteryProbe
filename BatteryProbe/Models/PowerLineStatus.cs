@@ -1,5 +1,5 @@
 ﻿
-namespace BatteryInfo.Models
+namespace BatteryProbe.Models
 {
 	/// <summary>
 	/// AC power status

@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Microsoft.Win32;
 
-namespace BatteryInfo
+namespace BatteryProbe
 {
 	public partial class MainWindow : Window
 	{

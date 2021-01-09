@@ -1,7 +1,7 @@
-﻿using BatteryInfo.Common;
-using BatteryInfo.Models;
+﻿using BatteryProbe.Common;
+using BatteryProbe.Models;
 
-namespace BatteryInfo
+namespace BatteryProbe
 {
 	public class BatteryStatus : BindableBase
 	{

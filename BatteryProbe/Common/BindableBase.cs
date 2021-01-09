@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace BatteryInfo.Common
+namespace BatteryProbe.Common
 {
 	public abstract class BindableBase : INotifyPropertyChanged
 	{

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatteryInfo", "BatteryInfo\BatteryInfo.csproj", "{D1EA8AA8-D7BC-4705-BC36-4C7289EF1823}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatteryProbe", "BatteryProbe\BatteryProbe.csproj", "{D1EA8AA8-D7BC-4705-BC36-4C7289EF1823}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A18A87A3-49C9-4298-83E1-9C155711DD83}
 	EndGlobalSection
 EndGlobal

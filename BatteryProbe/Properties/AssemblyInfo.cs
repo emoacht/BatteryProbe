@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BatteryInfo")]
+[assembly: AssemblyTitle("BatteryProbe")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BatteryInfo")]
-[assembly: AssemblyCopyright("Copyright © 2015-2017 emoacht")]
+[assembly: AssemblyProduct("BatteryProbe")]
+[assembly: AssemblyCopyright("Copyright © 2015 emoacht")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

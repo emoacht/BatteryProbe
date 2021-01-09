@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace BatteryInfo
+namespace BatteryProbe
 {
 	public partial class App : Application
 	{

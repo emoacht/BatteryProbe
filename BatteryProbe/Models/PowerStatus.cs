@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace BatteryInfo.Models
+namespace BatteryProbe.Models
 {
 	/// <summary>
 	/// Alternate wrapper class for GetSystemPowerStatus function

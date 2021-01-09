@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BatteryInfo.Models
+namespace BatteryProbe.Models
 {
 	/// <summary>
 	/// Battery charge status

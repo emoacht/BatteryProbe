@@ -1,9 +1,9 @@
-﻿<Window x:Class="BatteryInfo.MainWindow"
+﻿<Window x:Class="BatteryProbe.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:local="clr-namespace:BatteryInfo"
+		xmlns:local="clr-namespace:BatteryProbe"
 		x:Name="WindowRoot"
-		Title="Battery Info"
+		Title="Battery Probe"
 		Width="320" Height="140" SizeToContent="Height" ResizeMode="NoResize">
 	<Window.Resources>
 		<local:BooleanToBrushConverter x:Key="BooleanToBrushConverterForeground" TailBrush="Black" HeadBrush="White"/>
